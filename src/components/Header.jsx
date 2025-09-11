@@ -5,7 +5,11 @@ const Header = () => {
     <div className="header">
       <div className="container">
         <div className="header__logo">
-          <img width="38" src="./img/pizza-logo.svg" alt="Pizza logo" />
+          <img
+            width="38"
+            src="/src/assets/img/pizza-logo.svg"
+            alt="Pizza logo"
+          />
           <div>
             <h1>React Pizza</h1>
             <p>найсмачніша піца в вселенній</p>

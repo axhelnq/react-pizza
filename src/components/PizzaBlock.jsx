@@ -1,25 +1,36 @@
 import React, { useState } from 'react'
 
-const PizzaBlock = ({ title, price }) => {
-  const [count, setCount] = useState(0)
+const PizzaBlock = ({ title, price, imageUrl, types, sizes }) => {
+  const [activeTypeIndex, setActiveTypeIndex] = useState(0)
+  const [activeSizeIndex, setActiveSizeIndex] = useState(0)
+  const typeNames = ['тонка', 'традиційна']
 
   return (
     <div className="pizza-block">
-      <img
-        className="pizza-block__image"
-        src="https://svgsilh.com/svg/954632.svg"
-        alt="Pizza"
-      />
+      <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
       <h4 className="pizza-block__title">{title}</h4>
       <div className="pizza-block__selector">
         <ul>
-          <li className="active">тонке</li>
-          <li>традиційне</li>
+          {types.map((typeId) => (
+            <li
+              key={typeId}
+              className={activeTypeIndex === typeId ? 'active' : ''}
+              onClick={() => setActiveTypeIndex(typeId)}
+            >
+              {typeNames[typeId]}
+            </li>
+          ))}
         </ul>
         <ul>
-          <li className="active">26 см.</li>
-          <li>30 см.</li>
-          <li>40 см.</li>
+          {sizes.map((size, index) => (
+            <li
+              key={index}
+              className={activeSizeIndex === index ? 'active' : ''}
+              onClick={() => setActiveSizeIndex(index)}
+            >
+              {size} см.
+            </li>
+          ))}
         </ul>
       </div>
       <div className="pizza-block__bottom">
@@ -37,8 +48,8 @@ const PizzaBlock = ({ title, price }) => {
               fill="white"
             />
           </svg>
-          <span onClick={() => setCount(count + 1)}>Добавити</span>
-          <i>{count}</i>
+          <span>Добавити</span>
+          <i>0</i>
         </button>
       </div>
     </div>
