@@ -10,8 +10,6 @@ import { Routes, Route } from 'react-router-dom'
 function App() {
   // todo scss errors due to darken() lighten()
   // todo translate and add images in db.json
-  // todo installed react-content-loader
-  // todo installed react-router-dom
 
   return (
     <div className="wrapper">
@@ -26,5 +24,7 @@ function App() {
     </div>
   )
 }
+
+// http://localhost:3001/items?_sort=category
 
 export default App
