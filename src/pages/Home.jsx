@@ -17,15 +17,16 @@ const Home = ({ searchValue }) => {
 
   useEffect(() => {
     setIsLoading(true)
-
+    console.log(searchValue, encodeURIComponent(searchValue))
     const category =
-      categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ''
-    const sortBy = sortActiveIndex.sortProperty
-    const search = searchValue > 0 ? `&_search=${searchValue}` : ''
-    // page=1&_limit=4
+      categoryActiveIndex > 0 ? `&category=${categoryActiveIndex}` : ''
+    const sortBy = sortActiveIndex.sortProperty.replace('-', '')
+    const order = sortActiveIndex.sortProperty.includes('-') ? 'asc' : 'desc'
+    const search = searchValue ? `&title_like=${searchValue}&` : ''
+
     console.log('currentPage: ', currentPage)
     fetch(
-      `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}${search}`,
+      `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`,
     )
       .then((res) => {
         return res.json()

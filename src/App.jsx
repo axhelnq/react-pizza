@@ -11,8 +11,11 @@ import { useState } from 'react'
 function App() {
   // todo scss errors due to darken() lighten()
   // todo translate and add images in db.json
+
   // todo search
   // todo installed react-pagination
+  // todo змінив версію жсон-сервер
+  // todo pagination
   const [searchValue, setSearchValue] = useState('')
 
   return (
