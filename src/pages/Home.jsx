@@ -3,11 +3,12 @@ import Sort from '../components/Sort.jsx'
 import PizzaBlock from '../components/PizzaBlock'
 import { useEffect, useState } from 'react'
 import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
+import Pagination from '../components/Pagination/index.jsx'
 
-const Home = () => {
+const Home = ({ searchValue }) => {
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-
+  const [currentPage, setCurrentPage] = useState(1)
   const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
   const [sortActiveIndex, setSortActiveIndex] = useState({
     name: 'популярністю (ASC)',
@@ -20,8 +21,12 @@ const Home = () => {
     const category =
       categoryActiveIndex > 0 ? `category=${categoryActiveIndex}` : ''
     const sortBy = sortActiveIndex.sortProperty
-
-    fetch(`http://localhost:3001/items?${category}&_sort=${sortBy}`)
+    const search = searchValue > 0 ? `&_search=${searchValue}` : ''
+    // page=1&_limit=4
+    console.log('currentPage: ', currentPage)
+    fetch(
+      `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}${search}`,
+    )
       .then((res) => {
         return res.json()
       })
@@ -34,7 +39,7 @@ const Home = () => {
       left: 0,
       behavior: 'smooth',
     })
-  }, [categoryActiveIndex, sortActiveIndex])
+  }, [categoryActiveIndex, sortActiveIndex, searchValue, currentPage])
 
   return (
     <div className="container">
@@ -51,6 +56,7 @@ const Home = () => {
           ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
           : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
       </div>
+      <Pagination onChangePage={(num) => setCurrentPage(num)} />
     </div>
   )
 }
