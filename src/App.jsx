@@ -6,28 +6,27 @@ import Cart from './pages/Cart.jsx'
 import NotFound from './pages/NotFound.jsx'
 
 import { Routes, Route } from 'react-router-dom'
-import { useState } from 'react'
+import { createContext, useState } from 'react'
+
+export const SearchContext = createContext()
 
 function App() {
   // todo scss errors due to darken() lighten()
-  // todo translate and add images in db.json
-
-  // todo search
-  // todo installed react-pagination
-  // todo змінив версію жсон-сервер
-  // todo pagination
+  // todo add images in db.json
   const [searchValue, setSearchValue] = useState('')
 
   return (
     <div className="wrapper">
-      <Header searchValue={searchValue} setSearchValue={setSearchValue} />
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home searchValue={searchValue} />} />
-          <Route path="/cart" element={<Cart />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </div>
+      <SearchContext.Provider value={{ searchValue, setSearchValue }}>
+        <Header />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </SearchContext.Provider>
     </div>
   )
 }
