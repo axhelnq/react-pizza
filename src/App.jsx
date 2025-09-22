@@ -13,6 +13,7 @@ export const SearchContext = createContext()
 function App() {
   // todo scss errors due to darken() lighten()
   // todo images in db.json
+  // todo try...catch in axios
   const [searchValue, setSearchValue] = useState('')
 
   return (

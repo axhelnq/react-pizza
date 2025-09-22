@@ -6,16 +6,22 @@ import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
 import Pagination from '../components/Pagination/index.jsx'
 import { SearchContext } from '../App.jsx'
 import { useDispatch, useSelector } from 'react-redux'
-import { setCategoryId } from '../redux/slices/filterSlice.js'
+import axios from 'axios'
+import { setCurrentPage } from '../redux/slices/filterSlice.js'
 
 const Home = () => {
   const dispatch = useDispatch()
-  const { categoryId, sortType } = useSelector((state) => state.filter)
+  const { categoryId, sortType, currentPage } = useSelector(
+    (state) => state.filter,
+  )
 
   const { searchValue } = useContext(SearchContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
+
+  const onChangePage = (num) => {
+    dispatch(setCurrentPage(num))
+  }
 
   useEffect(() => {
     setIsLoading(true)
@@ -24,16 +30,14 @@ const Home = () => {
     const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `&title_like=${searchValue}&` : ''
 
-    fetch(
-      `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`,
-    )
+    axios
+      .get(
+        `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`,
+      )
       .then((res) => {
-        return res.json()
+        setItems(res.data)
+        setIsLoading(false)
       })
-      .then((arr) => {
-        setItems(arr)
-      })
-      .finally(() => setIsLoading(false))
     window.scrollTo({
       top: 0,
       left: 0,
@@ -44,10 +48,7 @@ const Home = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-        // value={categoryId}
-        // onChangeCategory={(index) => dispatch(setCategoryId(index))}
-        />
+        <Categories />
         <Sort />
       </div>
       <h2 className="content__title">Усі піци</h2>
@@ -56,7 +57,7 @@ const Home = () => {
           ? [...new Array(8)].map((_, index) => <Skeleton key={index} />)
           : items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)}
       </div>
-      <Pagination onChangePage={(num) => setCurrentPage(num)} />
+      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   )
 }

@@ -13,8 +13,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.9.0",
+    "axios": "^1.12.2",
     "concurrently": "^9.2.1",
     "json-server": "0.17.4",
+    "lodash.debounce": "^4.0.8",
     "react": "^19.1.1",
     "react-content-loader": "^7.1.1",
     "react-dom": "^19.1.1",
