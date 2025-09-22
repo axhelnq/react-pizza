@@ -12,7 +12,7 @@ export const SearchContext = createContext()
 
 function App() {
   // todo scss errors due to darken() lighten()
-  // todo add images in db.json
+  // todo images in db.json
   const [searchValue, setSearchValue] = useState('')
 
   return (

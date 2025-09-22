@@ -15,7 +15,7 @@ const Header = () => {
             />
             <div>
               <h1>React Pizza</h1>
-              <p>найсмачніша піца в вселенній</p>
+              <p>Lorem ipsum dolor sit amet.</p>
             </div>
           </div>
         </Link>

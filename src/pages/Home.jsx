@@ -5,29 +5,25 @@ import { useContext, useEffect, useState } from 'react'
 import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
 import Pagination from '../components/Pagination/index.jsx'
 import { SearchContext } from '../App.jsx'
+import { useDispatch, useSelector } from 'react-redux'
+import { setCategoryId } from '../redux/slices/filterSlice.js'
 
 const Home = () => {
-  const { searchValue } = useContext(SearchContext)
+  const dispatch = useDispatch()
+  const { categoryId, sortType } = useSelector((state) => state.filter)
 
+  const { searchValue } = useContext(SearchContext)
   const [items, setItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
-  const [categoryActiveIndex, setCategoryActiveIndex] = useState(0)
-  const [sortActiveIndex, setSortActiveIndex] = useState({
-    name: 'популярністю (ASC)',
-    sortProperty: 'rating',
-  })
 
   useEffect(() => {
     setIsLoading(true)
-    console.log(searchValue, encodeURIComponent(searchValue))
-    const category =
-      categoryActiveIndex > 0 ? `&category=${categoryActiveIndex}` : ''
-    const sortBy = sortActiveIndex.sortProperty.replace('-', '')
-    const order = sortActiveIndex.sortProperty.includes('-') ? 'asc' : 'desc'
+    const category = categoryId > 0 ? `&category=${categoryId}` : ''
+    const sortBy = sortType.sortProperty.replace('-', '')
+    const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `&title_like=${searchValue}&` : ''
 
-    console.log('currentPage: ', currentPage)
     fetch(
       `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`,
     )
@@ -43,16 +39,16 @@ const Home = () => {
       left: 0,
       behavior: 'smooth',
     })
-  }, [categoryActiveIndex, sortActiveIndex, searchValue, currentPage])
+  }, [categoryId, sortType.sortProperty, searchValue, currentPage])
 
   return (
     <div className="container">
       <div className="content__top">
         <Categories
-          value={categoryActiveIndex}
-          onChange={(i) => setCategoryActiveIndex(i)}
+        // value={categoryId}
+        // onChangeCategory={(index) => dispatch(setCategoryId(index))}
         />
-        <Sort value={sortActiveIndex} onChange={(i) => setSortActiveIndex(i)} />
+        <Sort />
       </div>
       <h2 className="content__title">Усі піци</h2>
       <div className="content__items">
