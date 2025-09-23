@@ -1,12 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import Search from './Search'
+import sortList from '../constants/sortList.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { setFilters } from '../redux/slices/filterSlice.js'
 
 const Header = () => {
+  const dispatch = useDispatch()
+  const { totalPrice, totalCount } = useSelector((state) => state.cart)
   return (
     <div className="header">
       <div className="container">
-        <Link to="/">
+        <Link
+          to="/"
+          onClick={() =>
+            dispatch(
+              setFilters({
+                categoryId: 0,
+                sortType: sortList[0],
+                currentPage: 1,
+              }),
+            )
+          }
+        >
           <div className="header__logo">
             <img
               width="38"
@@ -22,7 +38,7 @@ const Header = () => {
         <Search />
         <div className="header__cart">
           <Link to="/cart" className="button button--cart">
-            <span>520 ₴</span>
+            <span>{totalPrice} ₴</span>
             <div className="button__delimiter"></div>
             <svg
               width="18"
@@ -53,7 +69,7 @@ const Header = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <span>3</span>
+            <span>{totalCount}</span>
           </Link>
         </div>
       </div>

@@ -1,9 +1,30 @@
 import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { addItem } from '../../redux/slices/cartSlice.js'
 
-const Index = ({ title, price, imageUrl, types, sizes }) => {
+const typesValues = ['тонке', 'традиційне']
+const sizesValues = [26, 30, 40]
+
+const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
   const [activeTypeIndex, setActiveTypeIndex] = useState(0)
   const [activeSizeIndex, setActiveSizeIndex] = useState(0)
-  const typeNames = ['тонка', 'традиційна']
+  const dispatch = useDispatch()
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.id === id),
+  )
+  const addedCount = cartItem ? cartItem.count : 0
+
+  const onClickAdd = () => {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      type: typesValues[activeSizeIndex],
+      size: sizesValues[activeSizeIndex],
+    }
+    dispatch(addItem(item))
+  }
 
   return (
     <div className="pizza-block-wrapper">
@@ -18,7 +39,7 @@ const Index = ({ title, price, imageUrl, types, sizes }) => {
                 className={activeTypeIndex === typeId ? 'active' : ''}
                 onClick={() => setActiveTypeIndex(typeId)}
               >
-                {typeNames[typeId]}
+                {typesValues[typeId]}
               </li>
             ))}
           </ul>
@@ -36,7 +57,10 @@ const Index = ({ title, price, imageUrl, types, sizes }) => {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">від {price} ₴</div>
-          <button className="button button--outline button--add">
+          <button
+            onClick={onClickAdd}
+            className="button button--outline button--add"
+          >
             <svg
               width="12"
               height="12"
@@ -50,7 +74,7 @@ const Index = ({ title, price, imageUrl, types, sizes }) => {
               />
             </svg>
             <span>Добавити</span>
-            <i>0</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>
@@ -58,4 +82,4 @@ const Index = ({ title, price, imageUrl, types, sizes }) => {
   )
 }
 
-export default Index
+export default PizzaBlock

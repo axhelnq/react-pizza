@@ -1,5 +1,5 @@
 import Categories from '../components/Categories.jsx'
-import Sort, { sortList } from '../components/Sort.jsx'
+import Sort from '../components/Sort.jsx'
 import PizzaBlock from '../components/PizzaBlock'
 import { useContext, useEffect, useRef, useState } from 'react'
 import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
@@ -10,6 +10,7 @@ import axios from 'axios'
 import qs from 'qs'
 import { setCurrentPage, setFilters } from '../redux/slices/filterSlice.js'
 import { useNavigate } from 'react-router-dom'
+import sortList from '../constants/sortList.js'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -34,7 +35,6 @@ const Home = () => {
     const sortBy = sortType.sortProperty.replace('-', '')
     const order = sortType.sortProperty.includes('-') ? 'asc' : 'desc'
     const search = searchValue ? `&title_like=${searchValue}&` : ''
-    console.log('fetch')
     axios
       .get(
         `http://localhost:3001/items?_page=${currentPage}&_limit=4${category}&_sort=${sortBy}&_order=${order}${search}`,
@@ -42,14 +42,13 @@ const Home = () => {
       .then((res) => {
         setItems(res.data)
         setIsLoading(false)
-        console.log('res')
       })
   }
 
   // якщо змінили параметри і був перший рендер
   useEffect(() => {
+    // не костиль а лайфхак
     if (isMounted.current) {
-      // не костиль а лайфхак. Похоже до костиля, але ні
       const queryString = qs.stringify({
         sortProperty: sortType.sortProperty,
         categoryId,
@@ -64,12 +63,10 @@ const Home = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1))
-      console.log('params', params)
 
       const sortType = sortList.find(
         (obj) => obj.sortProperty === params.sortProperty,
       )
-      console.log({ ...params, sortType })
 
       dispatch(setFilters({ ...params, sortType }))
       isSearch.current = true

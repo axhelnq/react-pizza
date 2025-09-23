@@ -1,15 +1,7 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../redux/slices/filterSlice.js'
-
-export const sortList = [
-  { name: 'популярністю (DESC)', sortProperty: 'rating' },
-  { name: 'популярністю (ASC)', sortProperty: '-rating' },
-  { name: 'ціною (DESC)', sortProperty: 'price' },
-  { name: 'ціною (ASC)', sortProperty: '-price' },
-  { name: 'алфавітом (DESC)', sortProperty: 'title' },
-  { name: 'алфавітом (ASC)', sortProperty: '-title' },
-]
+import sortList from '../constants/sortList.js'
 
 const Sort = () => {
   const dispatch = useDispatch()
@@ -17,13 +9,43 @@ const Sort = () => {
 
   const [open, setOpen] = useState(false)
 
+  const sortRef = useRef()
+
   const onSelect = (obj) => {
     dispatch(setSortType(obj))
     setOpen(false)
   }
 
+  // закиття попапа якщо клік не по <Sort />
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false)
+      }
+    }
+
+    document.body.addEventListener('click', handleClickOutside)
+
+    /**
+     * ### useEffect i його return
+     * * return
+     * ```jsx
+     * return () => {}
+     * ```
+     * виконується unmount/смерті/розмонтовування компонента.
+     *
+     *  * Сам useEffect
+     *  ```jsx
+     *  useEffect () => {}
+     *  ```
+     *  при mount/рендеру компонента
+     */
+
+    return () => document.body.removeEventListener('click', handleClickOutside)
+  }, [])
+
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__label" onClick={() => setOpen(!open)}>
         <svg
           width="10"
