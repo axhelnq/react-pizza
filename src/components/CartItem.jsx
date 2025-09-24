@@ -14,7 +14,6 @@ const CartItem = ({ id, title, imageUrl, size, type, price, count }) => {
   }
 
   const onClickRemove = () => {
-    // todo ne renderetya
     if (window.confirm(`Are you sure you want to remove ${title}?`)) {
       dispatch(removeItem(id))
     }

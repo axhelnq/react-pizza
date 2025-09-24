@@ -10,7 +10,6 @@ const Cart = () => {
   const { items, totalCount, totalPrice } = useSelector((state) => state.cart)
 
   const onClickClear = () => {
-    // todo ne renderetya
     if (window.confirm(`Are you sure you want to clear basket?`)) {
       dispatch(clearItems())
     }

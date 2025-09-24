@@ -13,7 +13,15 @@ export const SearchContext = createContext()
 function App() {
   // todo scss errors due to darken() lighten()
   // todo images in db.json
-  // todo try...catch in axios
+  // todo видаляти пошук в кошику, при загрузці при помилці з бека
+  // todo винести jsx при помилці з бека як компонент
+  // todo адаптив для корзини і при помилці з бека як компонент
+
+  // TODO СПИСОК БАГІВ:
+  // 1 todo якщо к-сть піц в корзині поставити на 0, вона пропаде, але коли добавити якусь піцу і зайти в корзину, то "видалена" піца буде з к-стю "0" і можна наклікати в мінусове значення
+  // 2 todo якщо в піци тільки традиційне тісто, воно не виділяється як тонке
+
+  // todo добавити біблу React NumberFlow для анімації цифр
   const [searchValue, setSearchValue] = useState('')
 
   return (
