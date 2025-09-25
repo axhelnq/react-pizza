@@ -4,10 +4,11 @@ import Search from './Search'
 import sortList from '../constants/sortList.js'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../redux/slices/filterSlice.js'
+import { selectCart } from '../redux/slices/cartSlice.js'
 
 const Header = () => {
   const dispatch = useDispatch()
-  const { totalPrice, totalCount } = useSelector((state) => state.cart)
+  const { totalPrice, totalCount } = useSelector(selectCart)
   return (
     <div className="header">
       <div className="container">

@@ -1,10 +1,9 @@
 import Categories from '../components/Categories.jsx'
 import Sort from '../components/Sort.jsx'
 import PizzaBlock from '../components/PizzaBlock'
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
 import Pagination from '../components/Pagination/index.jsx'
-import { SearchContext } from '../App.jsx'
 import { useDispatch, useSelector } from 'react-redux'
 import qs from 'qs'
 import { setCurrentPage, setFilters } from '../redux/slices/filterSlice.js'
@@ -13,12 +12,12 @@ import sortList from '../constants/sortList.js'
 import { fetchData } from '../redux/slices/pizzasSlice.js'
 
 const Home = () => {
-  const { searchValue } = useContext(SearchContext)
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
-  const { categoryId, sortType, currentPage } = useSelector(
+
+  const { categoryId, sortType, currentPage, searchValue } = useSelector(
     (state) => state.filter,
   )
   const { items, status } = useSelector((state) => state.pizzas)

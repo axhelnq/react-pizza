@@ -2,12 +2,12 @@ import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import CartItem from '../components/CartItem.jsx'
-import { clearItems } from '../redux/slices/cartSlice.js'
+import { clearItems, selectCart } from '../redux/slices/cartSlice.js'
 import CartEmpty from '../components/CartEmpty.jsx'
 
 const Cart = () => {
   const dispatch = useDispatch()
-  const { items, totalCount, totalPrice } = useSelector((state) => state.cart)
+  const { items, totalCount, totalPrice } = useSelector(selectCart)
 
   const onClickClear = () => {
     if (window.confirm(`Are you sure you want to clear basket?`)) {
