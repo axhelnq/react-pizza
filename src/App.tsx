@@ -3,7 +3,7 @@ import Home from './pages/Home.jsx'
 import Cart from './pages/Cart.jsx'
 
 import NotFound from './pages/NotFound.jsx'
-import FullPizza from './pages/FullPizza.jsx'
+import FullPizza from './pages/FullPizza.js'
 
 import { Routes, Route } from 'react-router-dom'
 import MainLayout from './layouts/MainLayout.jsx'
@@ -24,14 +24,16 @@ function App() {
   // todo винести різні списки в './constants'
 
   // TODO СПИСОК БАГІВ:
-  // 1 todo якщо к-сть піц в корзині поставити на 0, вона пропаде, але коли добавити якусь піцу і зайти в корзину, то "видалена" піца буде з к-стю "0" і можна наклікати в мінусове значення
-  // 2 todo якщо в піци тільки традиційне тісто, воно не виділяється як тонке
-  // 3 todo деколи любе тісто не попадає в корзину
-  // 4 todo пагінація: лишні сторінки не пропадають
+  // 1 todo якщо в піци тільки традиційне тісто, воно не виділяється як тонке
+  // 2 todo деколи любе тісто не попадає в корзину
+  // 3 todo пагінація: лишні сторінки не пропадають
 
   // TODO СПИСОК ФІЧ НА МАЙБУТНЄ:
   // ?. todo добавити біблу React NumberFlow для анімації цифр
   // ?. todo добавити біблу React Tosts для push-up повідомлень
+
+  // todo список для коміта
+  // БАГ ФІКС: якщо к-сть піц в корзині поставити на 0, вона пропаде, але коли добавити якусь піцу і зайти в корзину, то "видалена" піца буде з к-стю "0" і можна наклікати в мінусове значення
   return (
     <Routes>
       <Route path="/" element={<MainLayout />}>

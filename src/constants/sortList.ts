@@ -5,6 +5,6 @@ const sortList = [
   { name: 'ціною (ASC)', sortProperty: '-price' },
   { name: 'алфавітом (DESC)', sortProperty: 'title' },
   { name: 'алфавітом (ASC)', sortProperty: '-title' },
-]
+] as const
 
 export default sortList

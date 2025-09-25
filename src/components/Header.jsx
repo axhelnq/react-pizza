@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useLocation, useMatch } from 'react-router-dom'
 import Search from './Search'
-import sortList from '../constants/sortList.js'
+import sortList from '../constants/sortList.ts'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../redux/slices/filterSlice.js'
 import { selectCart } from '../redux/slices/cartSlice.js'

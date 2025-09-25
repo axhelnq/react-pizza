@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../redux/slices/filterSlice.js'
-import sortList from '../constants/sortList.js'
+import sortList from '../constants/sortList.ts'
 
 const Sort = () => {
   const dispatch = useDispatch()

@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import qs from 'qs'
 import { setCurrentPage, setFilters } from '../redux/slices/filterSlice.js'
 import { Link, useNavigate } from 'react-router-dom'
-import sortList from '../constants/sortList.js'
+import sortList from '../constants/sortList.ts'
 import { fetchData } from '../redux/slices/pizzasSlice.js'
 
 const Home = () => {
@@ -85,11 +85,12 @@ const Home = () => {
   }, [categoryId, sortType.sortProperty, searchValue, currentPage])
 
   const skeleton = [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-  const pizzas = items.map((obj) => (
-    <Link key={obj.id} to={`/pizzas/${obj.id}`}>
-      <PizzaBlock {...obj} />
-    </Link>
-  ))
+  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
+  //   const pizzas = items.map((obj) => (
+  //     <Link key={obj.id} to={`/pizzas/${obj.id}`}>
+  //       <PizzaBlock {...obj} />
+  //     </Link>
+  //   ))
 
   return (
     <div className="container">

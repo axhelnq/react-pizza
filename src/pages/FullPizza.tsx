@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import axios from 'axios'
-import PizzaBlock from '../components/PizzaBlock/index.jsx'
 
-const FullPizza = () => {
-  const [item, setItem] = useState(null)
+const FullPizza: React.FC = () => {
+  const [item, setItem] = useState<{
+    title: string
+    price: number
+    imageUrl: string
+  }>()
   const { id } = useParams()
   const navigate = useNavigate()
 
@@ -24,12 +27,14 @@ const FullPizza = () => {
   }, [id])
 
   if (!item) {
-    return <h2>⏳ Завантаження...</h2>
+    return <>⏳ Завантаження..</>
   }
 
   return (
     <div className="container">
-      <PizzaBlock {...item} />
+      <img src={item.imageUrl} alt="pizza" width="100px" />
+      <h2>{item.title}</h2>
+      <b>{item.price} UAH.</b>
     </div>
   )
 }
