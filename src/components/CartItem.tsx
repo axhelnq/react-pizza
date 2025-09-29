@@ -1,16 +1,7 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice.js'
-
-type ICartItemProps = {
-  id: string
-  imageUrl: string
-  title: string
-  type: string
-  size: number
-  price: number
-  count: number
-}
+import { ICartItemProps } from '../@types/pizza'
 
 const CartItem: React.FC<ICartItemProps> = ({
   id,
@@ -22,22 +13,6 @@ const CartItem: React.FC<ICartItemProps> = ({
   count,
 }) => {
   const dispatch = useDispatch()
-
-  const onClickPlus = () => {
-    dispatch(addItem({ id }))
-  }
-
-  const onClickMinus = () => {
-    if (count > 1) {
-      dispatch(minusItem(id))
-    }
-  }
-
-  const onClickRemove = () => {
-    if (window.confirm(`Are you sure you want to remove ${title}?`)) {
-      dispatch(removeItem(id))
-    }
-  }
 
   return (
     <div className="cart__item">
@@ -53,7 +28,11 @@ const CartItem: React.FC<ICartItemProps> = ({
       <div className="cart__item-count">
         {count > 1 && (
           <div
-            onClick={onClickMinus}
+            onClick={() => {
+              if (count > 1) {
+                dispatch(minusItem(id))
+              }
+            }}
             className="button button--outline button--circle cart__item-count-minus"
           >
             <svg
@@ -76,7 +55,7 @@ const CartItem: React.FC<ICartItemProps> = ({
         )}
         <b>{count}</b>
         <div
-          onClick={onClickPlus}
+          onClick={() => dispatch(addItem({ id }))}
           className="button button--outline button--circle cart__item-count-plus"
         >
           <svg
@@ -102,7 +81,11 @@ const CartItem: React.FC<ICartItemProps> = ({
       </div>
       <div className="cart__item-remove">
         <div
-          onClick={onClickRemove}
+          onClick={() => {
+            if (window.confirm(`Are you sure you want to remove ${title}?`)) {
+              dispatch(removeItem(id))
+            }
+          }}
           className="button button--outline button--circle"
         >
           <svg

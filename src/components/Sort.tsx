@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { setSortType } from '../redux/slices/filterSlice.js'
+import { selectFilter, setSortType } from '../redux/slices/filterSlice.js'
 import sortList, { SortItem } from '../constants/sortList'
 
 const Sort: React.FC = () => {
   const dispatch = useDispatch()
-  // todo ts-ignore
-  // @ts-ignore
-  const sortType = useSelector((state) => state.filter.sortType)
+  const { sortType } = useSelector(selectFilter)
 
   const [open, setOpen] = useState(false)
 
@@ -20,9 +18,8 @@ const Sort: React.FC = () => {
 
   // закиття попапа якщо клік не по <Sort />
   useEffect(() => {
-    // todo any
-    const handleClickOutside = (event: any) => {
-      if (!event.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
         setOpen(false)
       }
     }

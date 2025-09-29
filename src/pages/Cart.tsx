@@ -105,7 +105,7 @@ const Cart: React.FC = () => {
         </div>
         <div className="content__items">
           {
-            // todo any
+            // todo any (obj)
             items.map((item: any) => (
               <CartItem {...item} key={item.id} />
             ))
@@ -145,9 +145,13 @@ const Cart: React.FC = () => {
               <span>Вернутися назад</span>
             </Link>
             {/* todo div??? */}
-            <div className="button pay-btn">
+            <a
+              href={'https://google.com'}
+              target={'_blank'}
+              className="button pay-btn"
+            >
               <span>Оплатити зараз</span>
-            </div>
+            </a>
           </div>
         </div>
       </div>

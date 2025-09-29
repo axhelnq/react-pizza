@@ -1,20 +1,11 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addItem, selectCartItemById } from '../../redux/slices/cartSlice.js'
+import { IPizzaProps } from '../../@types/pizza'
 
 const typesValues = ['тонке', 'традиційне']
 // todo недо лишній маньовр, на беку є розміра добрі
 const sizesValues = [26, 30, 40]
-
-type IPizzaProps = {
-  id: string
-  title: string
-  price: number
-  imageUrl: string
-  types: number[]
-  sizes: number[]
-  rating: number
-}
 
 const PizzaBlock: React.FC<IPizzaProps> = ({
   id,

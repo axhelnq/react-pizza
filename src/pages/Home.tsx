@@ -6,7 +6,7 @@ import Skeleton from '../components/PizzaBlock/Skeleton'
 import Pagination from '../components/Pagination/index'
 import { useDispatch, useSelector } from 'react-redux'
 import qs from 'qs'
-import { setCurrentPage, setFilters } from '../redux/slices/filterSlice.js'
+import { selectFilter, setFilters } from '../redux/slices/filterSlice.js'
 import { useNavigate } from 'react-router-dom'
 import sortList from '../constants/sortList'
 import { fetchData } from '../redux/slices/pizzasSlice.js'
@@ -17,19 +17,12 @@ const Home: React.FC = () => {
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
-  const { categoryId, sortType, currentPage, searchValue } = useSelector(
-    // todo ts-ignore
-    // @ts-ignore
-    (state) => state.filter,
-  )
+  const { categoryId, sortType, currentPage, searchValue } =
+    useSelector(selectFilter)
 
-  // todo ts-ignore
+  // todo ts-ignore (redux)
   // @ts-ignore
   const { items, status } = useSelector((state) => state.pizzas)
-
-  const onChangePage = (num: number) => {
-    dispatch(setCurrentPage(num))
-  }
 
   const getData = async () => {
     const category = categoryId > 0 ? `&category=${categoryId}` : ''
@@ -38,7 +31,7 @@ const Home: React.FC = () => {
     const search = searchValue ? `&title_like=${searchValue}&` : ''
 
     dispatch(
-      // todo ts-ignore
+      // todo ts-ignore (redux)
       // @ts-ignore
       fetchData({
         category,
@@ -92,7 +85,7 @@ const Home: React.FC = () => {
   }, [categoryId, sortType.sortProperty, searchValue, currentPage])
 
   const skeleton = [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-  // todo any
+  // todo any (obj)
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
 
   return (
@@ -117,7 +110,7 @@ const Home: React.FC = () => {
           {status === 'loading' ? skeleton : pizzas}
         </div>
       )}
-      <Pagination currentPage={currentPage} onChangePage={onChangePage} />
+      <Pagination />
     </div>
   )
 }

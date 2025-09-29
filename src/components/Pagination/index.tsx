@@ -1,23 +1,19 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 import styles from './Pagination.module.scss'
+import { useDispatch, useSelector } from 'react-redux'
+import { selectFilter, setCurrentPage } from '../../redux/slices/filterSlice'
 
-type IPaginationProps = {
-  currentPage: number
-  // todo any
-  onChangePage: any
-}
+const Pagination: React.FC = () => {
+  const dispatch = useDispatch()
+  const { currentPage } = useSelector(selectFilter)
 
-const Pagination: React.FC<IPaginationProps> = ({
-  currentPage,
-  onChangePage,
-}) => {
   return (
     <ReactPaginate
       className={styles.root}
       breakLabel="..."
       nextLabel=">"
-      onPageChange={(e) => onChangePage(e.selected + 1)}
+      onPageChange={(e) => dispatch(setCurrentPage(e.selected + 1))}
       pageRangeDisplayed={4}
       pageCount={3} // захардкожено, бо json-server не вміє повертати к-сть сторінок
       forcePage={currentPage - 1}
