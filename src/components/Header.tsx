@@ -1,12 +1,12 @@
 import React from 'react'
 import { Link, useLocation, useMatch } from 'react-router-dom'
 import Search from './Search'
-import sortList from '../constants/sortList.ts'
+import sortList from '../constants/sortList'
 import { useDispatch, useSelector } from 'react-redux'
 import { setFilters } from '../redux/slices/filterSlice.js'
 import { selectCart } from '../redux/slices/cartSlice.js'
 
-const Header = () => {
+const Header: React.FC = () => {
   const dispatch = useDispatch()
   const { totalPrice, totalCount } = useSelector(selectCart)
 

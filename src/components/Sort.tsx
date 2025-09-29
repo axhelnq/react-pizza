@@ -1,45 +1,33 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { setSortType } from '../redux/slices/filterSlice.js'
-import sortList from '../constants/sortList.ts'
+import sortList, { SortItem } from '../constants/sortList'
 
-const Sort = () => {
+const Sort: React.FC = () => {
   const dispatch = useDispatch()
+  // todo ts-ignore
+  // @ts-ignore
   const sortType = useSelector((state) => state.filter.sortType)
 
   const [open, setOpen] = useState(false)
 
-  const sortRef = useRef()
+  const sortRef = useRef<HTMLDivElement>(null)
 
-  const onSelect = (obj) => {
+  const onSelect = (obj: SortItem) => {
     dispatch(setSortType(obj))
     setOpen(false)
   }
 
   // закиття попапа якщо клік не по <Sort />
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    // todo any
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false)
       }
     }
 
     document.body.addEventListener('click', handleClickOutside)
-
-    /**
-     * ### useEffect i його return
-     * * return
-     * ```jsx
-     * return () => {}
-     * ```
-     * виконується unmount/смерті/розмонтовування компонента.
-     *
-     *  * Сам useEffect
-     *  ```jsx
-     *  useEffect () => {}
-     *  ```
-     *  при mount/рендеру компонента
-     */
 
     return () => document.body.removeEventListener('click', handleClickOutside)
   }, [])

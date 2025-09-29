@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import CartItem from '../components/CartItem.jsx'
+import CartItem from '../components/CartItem'
 import { clearItems, selectCart } from '../redux/slices/cartSlice.js'
-import CartEmpty from '../components/CartEmpty.jsx'
+import CartEmpty from '../components/CartEmpty'
 
-const Cart = () => {
+const Cart: React.FC = () => {
   const dispatch = useDispatch()
   const { items, totalCount, totalPrice } = useSelector(selectCart)
 
@@ -104,9 +104,12 @@ const Cart = () => {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item) => (
-            <CartItem {...item} key={item.id} />
-          ))}
+          {
+            // todo any
+            items.map((item: any) => (
+              <CartItem {...item} key={item.id} />
+            ))
+          }
         </div>
 
         <div className="cart__bottom">

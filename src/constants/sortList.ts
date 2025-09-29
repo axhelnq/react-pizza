@@ -1,4 +1,9 @@
-const sortList = [
+export type SortItem = {
+  name: string
+  sortProperty: string
+}
+
+const sortList: SortItem[] = [
   { name: 'популярністю (DESC)', sortProperty: 'rating' },
   { name: 'популярністю (ASC)', sortProperty: '-rating' },
   { name: 'ціною (DESC)', sortProperty: 'price' },

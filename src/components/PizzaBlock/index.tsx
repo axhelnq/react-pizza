@@ -3,13 +3,34 @@ import { useDispatch, useSelector } from 'react-redux'
 import { addItem, selectCartItemById } from '../../redux/slices/cartSlice.js'
 
 const typesValues = ['тонке', 'традиційне']
+// todo недо лишній маньовр, на беку є розміра добрі
 const sizesValues = [26, 30, 40]
 
-const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
+type IPizzaProps = {
+  id: string
+  title: string
+  price: number
+  imageUrl: string
+  types: number[]
+  sizes: number[]
+  rating: number
+}
+
+const PizzaBlock: React.FC<IPizzaProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  types,
+  sizes,
+  // todo rating не використовуэться ніде чогось
+  rating,
+}) => {
   const dispatch = useDispatch()
   const cartItem = useSelector(selectCartItemById(id))
-  const [activeTypeIndex, setActiveTypeIndex] = useState(0)
-  const [activeSizeIndex, setActiveSizeIndex] = useState(0)
+
+  const [activeTypeIndex, setActiveTypeIndex] = useState<number>(0)
+  const [activeSizeIndex, setActiveSizeIndex] = useState<number>(0)
 
   const addedCount = cartItem ? cartItem.count : 0
 
@@ -19,7 +40,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, types, sizes }) => {
       title,
       price,
       imageUrl,
-      type: typesValues[activeSizeIndex],
+      type: typesValues[activeTypeIndex],
       size: sizesValues[activeSizeIndex],
     }
     dispatch(addItem(item))

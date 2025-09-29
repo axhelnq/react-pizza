@@ -7,9 +7,14 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
+
+# Build output
 dist
 dist-ssr
+
+# Local files
 *.local
 
 # Editor directories and files
@@ -32,3 +37,6 @@ bun.lock
 .env
 .env.*
 !.env.example
+
+# Misc
+TODO.md

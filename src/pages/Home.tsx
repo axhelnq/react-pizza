@@ -1,28 +1,33 @@
-import Categories from '../components/Categories.jsx'
-import Sort from '../components/Sort.jsx'
-import PizzaBlock from '../components/PizzaBlock'
+import Categories from '../components/Categories'
+import Sort from '../components/Sort'
+import PizzaBlock from '../components/PizzaBlock/index.js'
 import React, { useEffect, useRef } from 'react'
-import Skeleton from '../components/PizzaBlock/Skeleton.jsx'
-import Pagination from '../components/Pagination/index.jsx'
+import Skeleton from '../components/PizzaBlock/Skeleton'
+import Pagination from '../components/Pagination/index'
 import { useDispatch, useSelector } from 'react-redux'
 import qs from 'qs'
 import { setCurrentPage, setFilters } from '../redux/slices/filterSlice.js'
-import { Link, useNavigate } from 'react-router-dom'
-import sortList from '../constants/sortList.ts'
+import { useNavigate } from 'react-router-dom'
+import sortList from '../constants/sortList'
 import { fetchData } from '../redux/slices/pizzasSlice.js'
 
-const Home = () => {
+const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const isSearch = useRef(false)
   const isMounted = useRef(false)
 
   const { categoryId, sortType, currentPage, searchValue } = useSelector(
+    // todo ts-ignore
+    // @ts-ignore
     (state) => state.filter,
   )
+
+  // todo ts-ignore
+  // @ts-ignore
   const { items, status } = useSelector((state) => state.pizzas)
 
-  const onChangePage = (num) => {
+  const onChangePage = (num: number) => {
     dispatch(setCurrentPage(num))
   }
 
@@ -33,6 +38,8 @@ const Home = () => {
     const search = searchValue ? `&title_like=${searchValue}&` : ''
 
     dispatch(
+      // todo ts-ignore
+      // @ts-ignore
       fetchData({
         category,
         sortBy,
@@ -85,12 +92,8 @@ const Home = () => {
   }, [categoryId, sortType.sortProperty, searchValue, currentPage])
 
   const skeleton = [...new Array(8)].map((_, index) => <Skeleton key={index} />)
-  const pizzas = items.map((obj) => <PizzaBlock key={obj.id} {...obj} />)
-  //   const pizzas = items.map((obj) => (
-  //     <Link key={obj.id} to={`/pizzas/${obj.id}`}>
-  //       <PizzaBlock {...obj} />
-  //     </Link>
-  //   ))
+  // todo any
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />)
 
   return (
     <div className="container">
@@ -102,7 +105,7 @@ const Home = () => {
       {status === 'error' ? (
         <div className="content__error-info">
           <h2>
-            Виникла помилка<icon>😕</icon>
+            Виникла помилка<span>😕</span>
           </h2>
           <p>
             На жаль, не вдалось получити піци. Попробуйте повторити спробу
