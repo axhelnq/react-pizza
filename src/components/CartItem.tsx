@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice.js'
-import { ICartItemProps } from '../@types/pizza'
+import { CartItemProps } from '../@types/pizza'
 
-const CartItem: React.FC<ICartItemProps> = ({
+const CartItem: React.FC<CartItemProps> = ({
   id,
   title,
   imageUrl,

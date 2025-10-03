@@ -5,13 +5,13 @@ type BasePizza = {
   imageUrl: string
 }
 
-export type IPizzaProps = BasePizza & {
+export type PizzaItem = BasePizza & {
   types: number[]
   sizes: number[]
   rating: number
 }
 
-export type ICartItemProps = BasePizza & {
+export type CartItemProps = BasePizza & {
   type: string
   size: number
   count: number
